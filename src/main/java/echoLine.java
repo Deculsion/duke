@@ -1,6 +1,10 @@
+/**
+ * Echos the command input by the user.
+ */
+
 import java.util.Scanner;
 
-public class echo_line extends Duke {
+public class echoLine extends Duke {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 

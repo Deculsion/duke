@@ -1,4 +1,13 @@
+/**
+ * Main class of Duke.
+ *
+ */
+
 public class Duke {
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         String logo = " ____        _        \n"
@@ -10,11 +19,11 @@ public class Duke {
         drawLine(20);
         System.out.println("Hello from\n" + logo);
         drawLine(20);
-        System.out.println("");
+        System.out.println();
 
     }
 
-    public static void drawLine(int length) {
+    static void drawLine(int length) {
 
         for (int i  = 0; i < length ; i++) {
             System.out.print("-");
