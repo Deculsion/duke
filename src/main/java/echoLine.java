@@ -10,9 +10,15 @@ public class echoLine extends Duke {
 
         String echo = input.next();
 
-        Duke.drawLine(20);
-        System.out.println(echo);
-        Duke.drawLine(20);
+        if (echo.toLowerCase() != "bye") {
+            Duke.drawLine(20);
+            System.out.println(echo);
+            Duke.drawLine(20);
+        }
+
+        else {
+            
+        }
 
     }
 }
