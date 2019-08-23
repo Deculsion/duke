@@ -6,6 +6,7 @@ public class Duke {
                     + "| | | | | | | |/ / _ \\\n"
                     + "| |_| | |_| |   <  __/\n"
                     + "|____/ \\__,_|_|\\_\\___|\n";
+
         drawLine(20);
         System.out.println("Hello from\n" + logo);
         drawLine(20);
