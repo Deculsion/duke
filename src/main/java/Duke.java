@@ -3,17 +3,22 @@
  *
  */
 
+import java.util.Scanner;
+
 public class Duke {
     /**
      * @param args This class doesn't do anything meaningful with args yet.
      */
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String command;
+        List taskList = new List();
 
         String logo = " ____        _        \n"
-                    + "|  _ \\ _   _| | _____ \n"
-                    + "| | | | | | | |/ / _ \\\n"
-                    + "| |_| | |_| |   <  __/\n"
-                    + "|____/ \\__,_|_|\\_\\___|\n";
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
 
         drawLine(20);
         System.out.println("Hello I'm\n" + logo);
@@ -21,7 +26,18 @@ public class Duke {
         drawLine(20);
         System.out.println();
 
-        while(echoLine.echo());
+        command = input.nextLine();
+
+        while (!command.equals("bye")) {
+            if (!command.equals("list")){
+                taskList.addItem(command);
+            }
+
+            else {
+                taskList.printItems();
+            }
+            command = input.nextLine();
+        }
 
         drawLine(20);
         System.out.println("Bye. Hope to see you again soon!");

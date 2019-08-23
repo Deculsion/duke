@@ -1,6 +1,6 @@
 
 public class List {
-    String[] items = new String[100];
+    private String[] items = new String[100];
     private int size = 0;
 
     void addItem(String item) {
@@ -16,7 +16,7 @@ public class List {
     void printItems() {
         Duke.drawLine(20);
         for (int i = 1; i <= size; i++) {
-           System.out.println(size + "." + items[i-1]);
+           System.out.println(i + "." + items[i-1]);
         }
         Duke.drawLine(20);
     }
