@@ -21,7 +21,11 @@ public class Duke {
         drawLine(20);
         System.out.println();
 
-        echoLine echo = new echoLine();
+        while(echoLine.echo());
+
+        drawLine(20);
+        System.out.println("Bye. Hope to see you again soon!");
+        drawLine(20);
 
     }
 

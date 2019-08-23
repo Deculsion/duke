@@ -5,20 +5,18 @@
 import java.util.Scanner;
 
 public class echoLine extends Duke {
-    public static void main(String[] args) {
+     static boolean echo() {
         Scanner input = new Scanner(System.in);
 
         String echo = input.next();
 
-        if (echo.toLowerCase() != "bye") {
-            Duke.drawLine(20);
-            System.out.println(echo);
-            Duke.drawLine(20);
+        if (echo.toLowerCase().equals("bye")) {
+            return false;
         }
 
-        else {
-            
-        }
-
+        Duke.drawLine(20);
+        System.out.println(echo);
+        Duke.drawLine(20);
+        return true;
     }
 }
