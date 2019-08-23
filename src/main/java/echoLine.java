@@ -4,7 +4,7 @@
 
 import java.util.Scanner;
 
-public class echoLine extends Duke {
+public class echoLine {
      static boolean echo() {
         Scanner input = new Scanner(System.in);
 
