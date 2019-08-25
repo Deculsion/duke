@@ -21,7 +21,8 @@ class List {
 
         else {
             for (int i = 1; i <= size; i++) {
-                System.out.println(i + ". " + items[i - 1].getItem());
+                String checkmark = items[i-1].isDone() ? "Y" : "N";
+                System.out.println(i + ".[" + checkmark + "] "+ items[i - 1].getItem());
             }
         }
         Duke.drawLine(20);
@@ -31,6 +32,11 @@ class List {
         if (itemnum <= Task.getTotalTasks()) {
             items[itemnum - 1].setDone();
         }
+
+        Duke.drawLine(20);
+        System.out.println("Nice! I've marked the task as done:");
+        System.out.println("[Y] " + items[itemnum-1].getItem());
+        Duke.drawLine(20);
 
     }
 }
