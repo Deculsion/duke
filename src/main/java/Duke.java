@@ -29,12 +29,17 @@ public class Duke {
         command = input.nextLine();
 
         while (!command.equals("bye")) {
-            if (!command.equals("list")){
-                taskList.addItem(command);
+            String[] cleanedCmd = command.split(" ", 2);
+            if (cleanedCmd[0].equals("list")){
+                taskList.printItems();
+            }
+
+            else if(cleanedCmd[0].equals("done")){
+                taskList.checkOff(Integer.parseInt(cleanedCmd[1]));
             }
 
             else {
-                taskList.printItems();
+                taskList.addItem(cleanedCmd[0] + " " +cleanedCmd[1]);
             }
             command = input.nextLine();
         }
