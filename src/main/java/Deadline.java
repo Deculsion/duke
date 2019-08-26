@@ -9,4 +9,8 @@ class Deadline extends Task {
     String getDate() {
         return date;
     }
+
+    public String toString() {
+        return "[D]" + super.toString() + date;
+    }
 }

@@ -1,10 +1,13 @@
 public class Event extends Task {
-    private String start;
-    private String end;
+    private String duration;
 
-    Event(String toAdd, String start, String end) {
+    Event(String toAdd, String duration) {
         super(toAdd);
-        this.start = start;
-        this.end = end;
+        this.duration = duration;
     }
+
+    public String toString() {
+        return "[D]" + super.toString() + "(at: " + duration + ")";
+    }
+
 }
