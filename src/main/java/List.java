@@ -1,12 +1,25 @@
 
 class List {
+
     private Task[] items = new Task[100];
 
-    void addItem(String item) {
-        Task newTask = new Task(item);
-        items[Task.getTotalTasks() - 1] = newTask;
+    void addItem(String item, TASKTYPE type) {
+        if (type == TASKTYPE.EVENT) {
+            String[] splitItem = item.split(" /at ");
+            items[Task.getTotalTasks() - 1] = new Event(splitItem[0], splitItem[1]);
+        }
 
-        System.out.println("Added: " + item);
+        else if (type == TASKTYPE.DEADLINE) {
+            String[] splitItem = item.split(" /");
+
+            items[Task.getTotalTasks() - 1] = new Deadline(splitItem[0], splitItem[1]);
+        }
+
+        else {
+            items[Task.getTotalTasks() - 1] = new ToDo(item);
+        }
+
+        System.out.println("You now have " + Task.getTotalTasks() + " items in the list.");
 
     }
 
