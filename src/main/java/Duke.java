@@ -6,6 +6,7 @@
 import java.util.Scanner;
 
 public class Duke {
+
     /**
      * @param args This class doesn't do anything meaningful with args yet.
      */
@@ -35,12 +36,22 @@ public class Duke {
                 System.out.println(taskList);
             }
 
+            else if (cleanedCmd[0].equals("event")) {
+                taskList.addItem(cleanedCmd[1], TASKTYPE.EVENT);
+            }
+            else if (cleanedCmd[0].equals("deadline")) {
+                taskList.addItem(cleanedCmd[1], TASKTYPE.DEADLINE);
+            }
+            else if (cleanedCmd[0].equals("todo")) {
+                taskList.addItem(cleanedCmd[1], TASKTYPE.TODO);
+            }
+
             else if(cleanedCmd[0].equals("done")){
                 taskList.checkOff(Integer.parseInt(cleanedCmd[1]));
             }
 
             else {
-                taskList.addItem(cleanedCmd[0] + " " +cleanedCmd[1]);
+                taskList.addItem(cleanedCmd[0] + " " +cleanedCmd[1], TASKTYPE.TODO);
             }
             Duke.drawLine(20);
             command = input.nextLine();
