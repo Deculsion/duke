@@ -4,4 +4,8 @@ class ToDo extends Task {
         super(toAdd);
     }
 
+    public String toString() {
+        return "[T]" + super.toString();
+    }
+
 }
