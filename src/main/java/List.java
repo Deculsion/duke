@@ -6,17 +6,17 @@ class List {
     void addItem(String item, TASKTYPE type) {
         if (type == TASKTYPE.EVENT) {
             String[] splitItem = item.split(" /at ");
-            items[Task.getTotalTasks() - 1] = new Event(splitItem[0], splitItem[1]);
+            items[Task.getTotalTasks()] = new Event(splitItem[0], splitItem[1]);
         }
 
         else if (type == TASKTYPE.DEADLINE) {
             String[] splitItem = item.split(" /");
 
-            items[Task.getTotalTasks() - 1] = new Deadline(splitItem[0], splitItem[1]);
+            items[Task.getTotalTasks()] = new Deadline(splitItem[0], splitItem[1]);
         }
 
         else {
-            items[Task.getTotalTasks() - 1] = new ToDo(item);
+            items[Task.getTotalTasks()] = new ToDo(item);
         }
 
         System.out.println("You now have " + Task.getTotalTasks() + " items in the list.");
