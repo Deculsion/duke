@@ -23,5 +23,10 @@ class Task {
     void setDone() {
         done = true;
     }
+
+    public String toString() {
+        String doneOp = done ? "Y" : "N";
+        return "[" + doneOp + "] " + item;
+    }
 }
 

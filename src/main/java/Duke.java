@@ -29,9 +29,10 @@ public class Duke {
         command = input.nextLine();
 
         while (!command.equals("bye")) {
+            Duke.drawLine(20);
             String[] cleanedCmd = command.split(" ", 2);
             if (cleanedCmd[0].equals("list")){
-                taskList.printItems();
+                System.out.println(taskList);
             }
 
             else if(cleanedCmd[0].equals("done")){
@@ -41,6 +42,7 @@ public class Duke {
             else {
                 taskList.addItem(cleanedCmd[0] + " " +cleanedCmd[1]);
             }
+            Duke.drawLine(20);
             command = input.nextLine();
         }
 
