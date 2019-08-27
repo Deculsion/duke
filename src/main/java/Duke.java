@@ -1,10 +1,8 @@
+import java.util.Scanner;
 /**
  * Main class of Duke. Starts the entire program.
  *
  */
-
-import java.util.Scanner;
-
 public class Duke {
 
     /**
@@ -31,28 +29,47 @@ public class Duke {
 
         while (!command.equals("bye")) {
             Duke.drawLine(20);
-            String[] cleanedCmd = command.split(" ", 2);
-            if (cleanedCmd[0].equals("list")){
-                System.out.println(taskList);
+            try {
+                String[] cleanedCmd = command.split(" ", 2);
+
+                switch (cleanedCmd[0]) {
+                    case "list":
+                        System.out.println(taskList);
+                        break;
+
+                    case "event":
+                        taskList.addItem(cleanedCmd[1], TASKTYPE.EVENT);
+                        break;
+
+                    case "deadline":
+                        taskList.addItem(cleanedCmd[1], TASKTYPE.DEADLINE);
+                        break;
+
+                    case "todo":
+                        taskList.addItem(cleanedCmd[1], TASKTYPE.TODO);
+                        break;
+
+                    case "done":
+                        taskList.checkOff(Integer.parseInt(cleanedCmd[1]));
+                        break;
+
+                    case "save":
+                        taskList.savetoFile();
+                        break;
+
+                    default:
+                        throw new UnknownCommandException();
+                }
             }
 
-            else if (cleanedCmd[0].equals("event")) {
-                taskList.addItem(cleanedCmd[1], TASKTYPE.EVENT);
-            }
-            else if (cleanedCmd[0].equals("deadline")) {
-                taskList.addItem(cleanedCmd[1], TASKTYPE.DEADLINE);
-            }
-            else if (cleanedCmd[0].equals("todo")) {
-                taskList.addItem(cleanedCmd[1], TASKTYPE.TODO);
+            catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("OOPS!!! The description of " + command + " cannot be empty.");
             }
 
-            else if(cleanedCmd[0].equals("done")){
-                taskList.checkOff(Integer.parseInt(cleanedCmd[1]));
+            catch (UnknownCommandException e) {
+                System.out.println("OOPS!!! I don't know what you mean.");
             }
 
-            else {
-                taskList.addItem(cleanedCmd[0] + " " +cleanedCmd[1], TASKTYPE.TODO);
-            }
             Duke.drawLine(20);
             command = input.nextLine();
         }
