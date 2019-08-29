@@ -10,4 +10,8 @@ public class Event extends Task {
         return "[E]" + super.toString() + "(at: " + duration + ")";
     }
 
+    String getDuration() {
+        return duration;
+    }
+
 }
