@@ -30,7 +30,7 @@ public class Duke {
         while (!command.equals("bye")) {
             Duke.drawLine(20);
             try {
-                String[] cleanedCmd = command.split(" ", 2);
+                String[] cleanedCmd = command.split("\\s", 2);
 
                 switch (cleanedCmd[0]) {
                     case "list":
@@ -60,9 +60,12 @@ public class Duke {
                     default:
                         throw new UnknownCommandException();
                 }
+
+                taskList.savetoFile();
             }
 
             catch (ArrayIndexOutOfBoundsException e){
+                System.err.format("OOB exception: %s%n", e);
                 System.out.println("OOPS!!! The description of " + command + " cannot be empty.");
             }
 
@@ -71,7 +74,6 @@ public class Duke {
             }
 
             Duke.drawLine(20);
-            taskList.savetoFile();
             command = input.nextLine();
         }
 

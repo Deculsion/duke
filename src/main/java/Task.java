@@ -8,6 +8,12 @@ class Task {
         totalTasks++;
     }
 
+    DateTime str_to_DateTime(String date) {
+        String[] date_tok = date.split(" ");
+        return new DateTime(date_tok[0], date_tok[1]);
+
+    }
+
     static int  getTotalTasks() {
         return totalTasks;
     }

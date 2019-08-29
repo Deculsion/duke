@@ -13,22 +13,26 @@ class List {
     }
 
     void addItem(String item, TASKTYPE type) {
-        if (type == TASKTYPE.EVENT) {
-            String[] splitItem = item.split(" /at ");
-            items[Task.getTotalTasks()] = new Event(splitItem[0], splitItem[1]);
+
+        try {
+            if (type == TASKTYPE.EVENT) {
+                String[] splitItem = item.split(" /at ");
+                items[Task.getTotalTasks()] = new Event(splitItem[0], splitItem[1]);
+            } else if (type == TASKTYPE.DEADLINE) {
+                String[] splitItem = item.split(" /by ");
+
+                items[Task.getTotalTasks()] = new Deadline(splitItem[0], splitItem[1]);
+            } else {
+                items[Task.getTotalTasks()] = new ToDo(item);
+            }
+
+            System.out.println("You now have " + Task.getTotalTasks() + " items in the list.");
         }
 
-        else if (type == TASKTYPE.DEADLINE) {
-            String[] splitItem = item.split(" /by ");
-
-            items[Task.getTotalTasks()] = new Deadline(splitItem[0], splitItem[1]);
+        catch (ArrayIndexOutOfBoundsException e) {
+           System.out.println("OOPS!! Deadline and Events must have /by and /at tags respectively");
         }
 
-        else {
-            items[Task.getTotalTasks()] = new ToDo(item);
-        }
-
-        System.out.println("You now have " + Task.getTotalTasks() + " items in the list.");
 
     }
 
@@ -100,12 +104,12 @@ class List {
 
                 else if (obj instanceof Deadline) {
                     sb.insert(0, "D | ");
-                    sb.append(" | ").append(((Deadline) obj).getDate());
+                    sb.append(" | ").append(((Deadline) obj).getDate_short());
                 }
 
                 else if (obj instanceof Event) {
                     sb.insert(0, "E | ");
-                    sb.append(" | ").append(((Event) obj).getDuration());
+                    sb.append(" | ").append(((Event) obj).getDuration_short());
                 }
 
                 if (obj.isDone()) {

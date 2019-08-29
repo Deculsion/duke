@@ -1,17 +1,25 @@
 public class Event extends Task {
-    private String duration;
+    private DateTime from;
+    private DateTime to;
 
     Event(String toAdd, String duration) {
         super(toAdd);
-        this.duration = duration;
+        String[] dates = duration.split(" to ");
+        from = str_to_DateTime(dates[0]);
+        to = str_to_DateTime(dates[1]);
     }
 
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + duration + ")";
+        return "[E]" + super.toString() + " (at: " + from.toString() + " to " + to.toString() + " )" ;
+
     }
 
     String getDuration() {
-        return duration;
+        return from.toString() + " to " + to.toString();
+    }
+
+    String getDuration_short() {
+        return from.getDate_short() + " to " + to.getDate_short();
     }
 
 }

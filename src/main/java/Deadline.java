@@ -1,13 +1,17 @@
 class Deadline extends Task {
-    private String date;
+    private DateTime date;
 
     Deadline(String toAdd, String date) {
         super(toAdd);
-        this.date = date;
+        this.date = str_to_DateTime(date);
     }
 
     String getDate() {
-        return date;
+        return date.toString();
+    }
+
+    String getDate_short() {
+       return date.getDate_short();
     }
 
     public String toString() {
