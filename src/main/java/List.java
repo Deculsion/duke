@@ -1,10 +1,16 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Arrays;
 
 class List {
 
     private Task[] items = new Task[100];
+
+    List() {
+        loadfromFile();
+    }
 
     void addItem(String item, TASKTYPE type) {
         if (type == TASKTYPE.EVENT) {
@@ -13,7 +19,7 @@ class List {
         }
 
         else if (type == TASKTYPE.DEADLINE) {
-            String[] splitItem = item.split(" / ");
+            String[] splitItem = item.split(" /by ");
 
             items[Task.getTotalTasks()] = new Deadline(splitItem[0], splitItem[1]);
         }
@@ -23,6 +29,48 @@ class List {
         }
 
         System.out.println("You now have " + Task.getTotalTasks() + " items in the list.");
+
+    }
+
+    private void loadfromFile() {
+        Path file = Paths.get("data/duke.txt");
+
+        try {
+            if (!Files.exists(file)) {
+                return;
+            }
+
+            BufferedReader reader = Files.newBufferedReader(file);
+
+            String line;
+            while((line = reader.readLine()) != null) {
+                String[] tokens = line.split(" \\| ");
+
+                System.out.println(Arrays.toString(tokens));
+
+                switch (tokens[0]) {
+                    case "T":
+                        addItem(tokens[1], TASKTYPE.TODO);
+                        break;
+
+                    case "D":
+                        addItem(tokens[1] + " /by " + tokens[2], TASKTYPE.DEADLINE);
+                        break;
+
+                    case "E":
+                        addItem(tokens[1] + " /at " + tokens[2], TASKTYPE.EVENT);
+                        break;
+                }
+
+            }
+
+            reader.close();
+
+        }
+
+        catch (IOException e) {
+            System.err.format("IO Exception: %s%n", e);
+        }
 
     }
 
@@ -63,7 +111,6 @@ class List {
 
             writer.close();
 
-            System.out.println("Successfully saved to " +file.toString());
         }
 
         catch (IOException e) {

@@ -71,6 +71,7 @@ public class Duke {
             }
 
             Duke.drawLine(20);
+            taskList.savetoFile();
             command = input.nextLine();
         }
 
