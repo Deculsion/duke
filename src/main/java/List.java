@@ -62,6 +62,10 @@ class List {
                         break;
                 }
 
+                if (tokens[tokens.length - 1].equals("1")){
+                    items[Task.getTotalTasks() - 1].setDone();
+                }
+
             }
 
             reader.close();
@@ -102,6 +106,14 @@ class List {
                 else if (obj instanceof Event) {
                     sb.insert(0, "E | ");
                     sb.append(" | ").append(((Event) obj).getDuration());
+                }
+
+                if (obj.isDone()) {
+                    sb.append (" | ").append("1");
+                }
+
+                else {
+                    sb.append(" | ").append("0");
                 }
 
                 writer.write(sb.toString());
