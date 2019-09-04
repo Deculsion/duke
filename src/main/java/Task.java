@@ -1,7 +1,7 @@
 class Task {
     private boolean done = false;
     private String item;
-    private static int totalTasks = 0;
+    static int totalTasks = 0;
 
     Task(String toAdd) {
         item = toAdd;
