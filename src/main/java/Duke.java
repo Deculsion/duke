@@ -57,6 +57,10 @@ public class Duke {
                         taskList.savetoFile();
                         break;
 
+                    case "delete":
+                        taskList.removeItem(Integer.parseInt(cleanedCmd[1]));
+                        break;
+
                     default:
                         throw new UnknownCommandException();
                 }
@@ -71,6 +75,10 @@ public class Duke {
 
             catch (UnknownCommandException e) {
                 System.out.println("OOPS!!! I don't know what you mean.");
+            }
+
+            catch (NumberFormatException e) {
+                System.out.println("OOPS!!! Please enter the number of the item to delete.");
             }
 
             Duke.drawLine(20);

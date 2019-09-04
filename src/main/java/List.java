@@ -3,10 +3,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Arrays;
+import java.util.ArrayList;
+
 
 class List {
 
-    private Task[] items = new Task[100];
+    private ArrayList<Task> items = new ArrayList<Task>();
 
     List() {
         loadfromFile();
@@ -17,13 +19,13 @@ class List {
         try {
             if (type == TASKTYPE.EVENT) {
                 String[] splitItem = item.split(" /at ");
-                items[Task.getTotalTasks()] = new Event(splitItem[0], splitItem[1]);
+                items.add(new Event(splitItem[0], splitItem[1]));
             } else if (type == TASKTYPE.DEADLINE) {
                 String[] splitItem = item.split(" /by ");
 
-                items[Task.getTotalTasks()] = new Deadline(splitItem[0], splitItem[1]);
+                items.add(new Deadline(splitItem[0], splitItem[1]));
             } else {
-                items[Task.getTotalTasks()] = new ToDo(item);
+                items.add(new ToDo(item));
             }
 
             System.out.println("You now have " + Task.getTotalTasks() + " items in the list.");
@@ -34,6 +36,25 @@ class List {
         }
 
 
+    }
+
+    void removeItem(int index) {
+        if (index > items.size()) {
+            System.out.println("OOPS!! The list is not that large!");
+            return;
+        }
+
+        else if (index <= 0) {
+            System.out.println("OOPS!! Please enter a number larger than 0.");
+            return;
+        }
+
+        Task obj = items.get(index - 1);
+        obj = null;
+        items.remove(index - 1);
+        Task.totalTasks--;
+
+        System.out.println("The item has been removed from the list.");
     }
 
     private void loadfromFile() {
@@ -67,7 +88,7 @@ class List {
                 }
 
                 if (tokens[tokens.length - 1].equals("1")){
-                    items[Task.getTotalTasks() - 1].setDone();
+                    items.get(Task.getTotalTasks() - 1).setDone();
                 }
 
             }
@@ -86,6 +107,9 @@ class List {
         Path file = Paths.get("data/duke.txt");
 
         try {
+            if (!Files.exists(Paths.get("data/duke"))) {
+                Files.createDirectories(Paths.get("data/duke"));
+            }
 
             if (!Files.exists(file)) {
                 Files.createFile(file);
@@ -94,7 +118,7 @@ class List {
             BufferedWriter writer = Files.newBufferedWriter(file);
             for (int i = 0 ; i < Task.getTotalTasks() ; i++) {
                 StringBuilder sb = new StringBuilder();
-                Task obj = items[i];
+                Task obj = items.get(i);
                 sb.append(obj.getItem());
 
                 if (obj instanceof ToDo) {
@@ -138,10 +162,10 @@ class List {
 
     void checkOff(int itemnum) {
         if (itemnum <= Task.getTotalTasks()) {
-            items[itemnum - 1].setDone();
+            items.get(itemnum - 1).setDone();
         }
         System.out.println("Nice! I've marked the task as done:");
-        System.out.println("[Y] " + items[itemnum-1].getItem());
+        System.out.println("[Y] " + items.get(itemnum-1).getItem());
     }
 
     public String toString() {
@@ -153,7 +177,7 @@ class List {
         else {
             StringBuilder str = new StringBuilder();
             for (int i = 1; i <= size; i++) {
-                str.append(i).append(". ").append(items[i - 1]).append("\n");
+                str.append(i).append(". ").append(items.get(i-1)).append("\n");
             }
 
             return str.toString();
