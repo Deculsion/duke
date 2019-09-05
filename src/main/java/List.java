@@ -57,6 +57,26 @@ class List {
         System.out.println("The item has been removed from the list.");
     }
 
+    void find_tasks(String query) {
+        ArrayList<Integer> foundItems = new ArrayList<Integer>();
+        for (int i = 0 ; i < items.size() ; i++) {
+            if (items.get(i).getItem().contains(query)) {
+                foundItems.add(i);
+            }
+        }
+
+        if (foundItems.isEmpty()) {
+            System.out.println("Sorry, the item cannot be found in the list.");
+            return;
+        }
+
+        int i = 1;
+        for (Integer index : foundItems) {
+            System.out.println(i++ + ". " + items.get(index).toString());
+        }
+
+    }
+
     private void loadfromFile() {
         Path file = Paths.get("data/duke.txt");
 

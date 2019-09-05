@@ -61,6 +61,11 @@ public class Duke {
                         taskList.removeItem(Integer.parseInt(cleanedCmd[1]));
                         break;
 
+                    case "find":
+                        taskList.find_tasks(cleanedCmd[1]);
+                        break;
+
+
                     default:
                         throw new UnknownCommandException();
                 }
