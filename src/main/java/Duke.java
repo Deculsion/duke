@@ -96,6 +96,10 @@ public class Duke {
 
     }
 
+    /**
+     * Draws a line across the screen
+     * @param length Number of characters to draw
+     */
     static void drawLine(int length) {
 
         for (int i  = 0; i < length; i++) {

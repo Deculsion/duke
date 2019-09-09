@@ -14,6 +14,11 @@ class List {
         loadfromFile();
     }
 
+    /**
+     * Adds an item of specified type enum to the task list.
+     * @param item The content of the task to add
+     * @param type The enum of TASKTYPE to add
+     */
     void addItem(String item, TASKTYPE type) {
 
         try {
@@ -38,6 +43,10 @@ class List {
 
     }
 
+    /**
+     * Deletes an item from the task list
+     * @param index List number item to delete.
+     */
     void removeItem(int index) {
         if (index > items.size()) {
             System.out.println("OOPS!! The list is not that large!");
@@ -57,6 +66,10 @@ class List {
         System.out.println("The item has been removed from the list.");
     }
 
+    /**
+     * Searches and returns all tasks that matches query.
+     * @param query String representing the search term.
+     */
     void find_tasks(String query) {
         ArrayList<Integer> foundItems = new ArrayList<Integer>();
         for (int i = 0 ; i < items.size() ; i++) {
@@ -77,6 +90,9 @@ class List {
 
     }
 
+    /**
+     * Loads the saved task list from file. Runs at start up and does nothing if file doesn't exist.
+     */
     private void loadfromFile() {
         Path file = Paths.get("data/duke.txt");
 
@@ -123,6 +139,10 @@ class List {
 
     }
 
+    /**
+     * Saves the current tasklist to file. Automatically called after every command.
+     * If no existing file is found, it will be created.
+     */
     void savetoFile() {
         Path file = Paths.get("data/duke.txt");
 
@@ -180,6 +200,10 @@ class List {
 
     }
 
+    /**
+     * Sets the specified task as complete.
+     * @param itemnum The list number of the item to check off.
+     */
     void checkOff(int itemnum) {
         if (itemnum <= Task.getTotalTasks()) {
             items.get(itemnum - 1).setDone();
