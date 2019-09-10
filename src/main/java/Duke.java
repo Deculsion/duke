@@ -11,7 +11,8 @@ public class Duke {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         String command;
-        List taskList = new List();
+        Storage fileIO = new Storage();
+        List taskList = fileIO.loadfromFile();
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -50,11 +51,11 @@ public class Duke {
                         break;
 
                     case "done":
-                        taskList.checkOff(Integer.parseInt(cleanedCmd[1]));
+                        taskList.checkOff(Integer.parseInt(cleanedCmd[1]), true);
                         break;
 
                     case "save":
-                        taskList.savetoFile();
+                        fileIO.savetoFile(taskList);
                         break;
 
                     case "delete":
@@ -70,7 +71,7 @@ public class Duke {
                         throw new UnknownCommandException();
                 }
 
-                taskList.savetoFile();
+                fileIO.savetoFile(taskList);
             }
 
             catch (ArrayIndexOutOfBoundsException e){

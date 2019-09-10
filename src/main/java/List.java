@@ -11,7 +11,6 @@ class List {
     private ArrayList<Task> items = new ArrayList<Task>();
 
     List() {
-        loadfromFile();
     }
 
     /**
@@ -37,7 +36,7 @@ class List {
         }
 
         catch (ArrayIndexOutOfBoundsException e) {
-           System.out.println("OOPS!! Deadline and Events must have /by and /at tags respectively");
+            System.out.println("OOPS!! Deadline and Events must have /by and /at tags respectively");
         }
 
 
@@ -91,125 +90,22 @@ class List {
     }
 
     /**
-     * Loads the saved task list from file. Runs at start up and does nothing if file doesn't exist.
-     */
-    private void loadfromFile() {
-        Path file = Paths.get("data/duke.txt");
-
-        try {
-            if (!Files.exists(file)) {
-                return;
-            }
-
-            BufferedReader reader = Files.newBufferedReader(file);
-
-            String line;
-            while((line = reader.readLine()) != null) {
-                String[] tokens = line.split(" \\| ");
-
-                System.out.println(Arrays.toString(tokens));
-
-                switch (tokens[0]) {
-                    case "T":
-                        addItem(tokens[1], TASKTYPE.TODO);
-                        break;
-
-                    case "D":
-                        addItem(tokens[1] + " /by " + tokens[2], TASKTYPE.DEADLINE);
-                        break;
-
-                    case "E":
-                        addItem(tokens[1] + " /at " + tokens[2], TASKTYPE.EVENT);
-                        break;
-                }
-
-                if (tokens[tokens.length - 1].equals("1")){
-                    items.get(Task.getTotalTasks() - 1).setDone();
-                }
-
-            }
-
-            reader.close();
-
-        }
-
-        catch (IOException e) {
-            System.err.format("IO Exception: %s%n", e);
-        }
-
-    }
-
-    /**
-     * Saves the current tasklist to file. Automatically called after every command.
-     * If no existing file is found, it will be created.
-     */
-    void savetoFile() {
-        Path file = Paths.get("data/duke.txt");
-
-        try {
-            if (!Files.exists(Paths.get("data/duke"))) {
-                Files.createDirectories(Paths.get("data/duke"));
-            }
-
-            if (!Files.exists(file)) {
-                Files.createFile(file);
-            }
-
-            BufferedWriter writer = Files.newBufferedWriter(file);
-            for (int i = 0 ; i < Task.getTotalTasks() ; i++) {
-                StringBuilder sb = new StringBuilder();
-                Task obj = items.get(i);
-                sb.append(obj.getItem());
-
-                if (obj instanceof ToDo) {
-                    sb.insert(0,"T | ");
-
-                }
-
-                else if (obj instanceof Deadline) {
-                    sb.insert(0, "D | ");
-                    sb.append(" | ").append(((Deadline) obj).getDate_short());
-                }
-
-                else if (obj instanceof Event) {
-                    sb.insert(0, "E | ");
-                    sb.append(" | ").append(((Event) obj).getDuration_short());
-                }
-
-                if (obj.isDone()) {
-                    sb.append (" | ").append("1");
-                }
-
-                else {
-                    sb.append(" | ").append("0");
-                }
-
-                writer.write(sb.toString());
-                writer.newLine();
-
-            }
-
-            writer.close();
-
-        }
-
-        catch (IOException e) {
-            System.err.format("IO Exception: %s%n", e);
-        }
-
-
-    }
-
-    /**
      * Sets the specified task as complete.
      * @param itemnum The list number of the item to check off.
      */
-    void checkOff(int itemnum) {
+    void checkOff(int itemnum, boolean UI) {
         if (itemnum <= Task.getTotalTasks()) {
             items.get(itemnum - 1).setDone();
         }
-        System.out.println("Nice! I've marked the task as done:");
-        System.out.println("[Y] " + items.get(itemnum-1).getItem());
+
+        if (UI) {
+            System.out.println("Nice! I've marked the task as done:");
+            System.out.println("[Y] " + items.get(itemnum - 1).getItem());
+        }
+    }
+
+    Task getTask(int i) {
+        return items.get(i);
     }
 
     public String toString() {
