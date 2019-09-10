@@ -9,49 +9,37 @@ public class Duke {
      * @param args This class doesn't do anything meaningful with args yet.
      */
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        String command;
+        String[] command ={"", ""};
         Storage fileIO = new Storage();
         List taskList = fileIO.loadfromFile();
+        UI ui = new UI();
 
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+        ui.welcome();
 
-        drawLine(20);
-        System.out.println("Hello I'm\n" + logo);
-        System.out.println("How may I assist you?\n");
-        drawLine(20);
-        System.out.println();
-
-        command = input.nextLine();
-
-        while (!command.equals("bye")) {
-            Duke.drawLine(20);
+        while (!command[0].equals("bye")) {
+            UI.drawLine(20);
             try {
-                String[] cleanedCmd = command.split("\\s", 2);
+                command = ui.takeInput();
 
-                switch (cleanedCmd[0]) {
+                switch (command[0]) {
                     case "list":
                         System.out.println(taskList);
                         break;
 
                     case "event":
-                        taskList.addItem(cleanedCmd[1], TASKTYPE.EVENT);
+                        taskList.addItem(command[1], TASKTYPE.EVENT);
                         break;
 
                     case "deadline":
-                        taskList.addItem(cleanedCmd[1], TASKTYPE.DEADLINE);
+                        taskList.addItem(command[1], TASKTYPE.DEADLINE);
                         break;
 
                     case "todo":
-                        taskList.addItem(cleanedCmd[1], TASKTYPE.TODO);
+                        taskList.addItem(command[1], TASKTYPE.TODO);
                         break;
 
                     case "done":
-                        taskList.checkOff(Integer.parseInt(cleanedCmd[1]), true);
+                        taskList.checkOff(Integer.parseInt(command[1]), true);
                         break;
 
                     case "save":
@@ -59,13 +47,12 @@ public class Duke {
                         break;
 
                     case "delete":
-                        taskList.removeItem(Integer.parseInt(cleanedCmd[1]));
+                        taskList.removeItem(Integer.parseInt(command[1]));
                         break;
 
                     case "find":
-                        taskList.find_tasks(cleanedCmd[1]);
+                        taskList.find_tasks(command[1]);
                         break;
-
 
                     default:
                         throw new UnknownCommandException();
@@ -74,26 +61,22 @@ public class Duke {
                 fileIO.savetoFile(taskList);
             }
 
-            catch (ArrayIndexOutOfBoundsException e){
-                System.err.format("OOB exception: %s%n", e);
-                System.out.println("OOPS!!! The description of " + command + " cannot be empty.");
+            catch (ArrayIndexOutOfBoundsException e) {
+                ui.printOutOfBoundException(e, command[0]);
             }
 
             catch (UnknownCommandException e) {
-                System.out.println("OOPS!!! I don't know what you mean.");
+                ui.printUnknownCommandException();
             }
 
             catch (NumberFormatException e) {
-                System.out.println("OOPS!!! Please enter the number of the item to delete.");
+                ui.printNumberFormatException();
             }
 
-            Duke.drawLine(20);
-            command = input.nextLine();
+            UI.drawLine(20);
         }
 
-        drawLine(20);
-        System.out.println("Bye. Hope to see you again soon!");
-        drawLine(20);
+        ui.goodbye();
 
     }
 
